@@ -3,10 +3,9 @@
 }
 .App {
   text-align: center;
+  height: 100vh;
 }
-.heading{
-  font-size: 40px;
-}
+
 .welcome{
   margin: 5px;
   font-size: 35px;
@@ -16,7 +15,7 @@
   bottom: 0;
   margin: auto;
   width: 90vw;
-  height: 2.5rem;
+  height: 8vh;
   background-color: rgb(210, 212, 214);
   
 }
@@ -36,11 +35,18 @@
 }
 
 .message-container{
-  height: 67vh;
+  height: 70vh;
   overflow: scroll;
   overflow-x: hidden;
   width: 92vw;
   margin: auto;
+}
+.top{
+  height: 14vh;
+  display: flex;
+    align-items: center;
+  justify-content:center;
+  /* margin: auto; */
 }
 
 .message-container::-webkit-scrollbar {
@@ -57,4 +63,18 @@
 }
 .sendIcon{
   font-size: 40px !important;
+}
+@media screen and (max-width: 500px ) {
+  .welcome{
+    margin: 5px;
+    font-size: 25px;
+  }
+  .top{
+    height: 13vh;
+  }
+
+  .app__form{
+    padding: 17px;
+    height: 8vh; 
+  }
 }

@@ -48,9 +48,11 @@ return () =>{
   if(username)
   return (
    <div className="App">
-     <img src={logo} alt="" className='logo'/>
-   <p className='welcome'>Welcome {username} to Facebook</p>
-   
+    <div className="top">
+     
+   <p className='welcome'>Welcome {username} in </p>
+   <img src={logo} alt="" className='logo'/>
+   </div>
  
    <FlipMove className='message-container'>
      {messages.map(({id, message }) =>(
