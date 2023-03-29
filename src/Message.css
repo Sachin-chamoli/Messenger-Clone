@@ -43,3 +43,8 @@ body{
     color: #9d9e9c;
 }
 
+@media screen and (max-width: 500px ) {
+   .content-mobile{
+    font-size: 15px !important;
+   }
+  }
