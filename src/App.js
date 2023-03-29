@@ -1,25 +1,76 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import {FormControl, Input, IconButton  } from '@mui/material';
+import Message from './Message';
+import {  db } from './firebase';
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import FlipMove from 'react-flip-move';
+import logo from "../src/image/logo.png"
+import SendRoundedIcon from '@mui/icons-material/SendRounded';
+// import { IconButton } from '@mui/material';
+
 
 function App() {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [username, setUsername] = useState('')
+
+  useEffect( ()=>{
+    const collectionRef = collection(db, "messages"); 
+    const sortedQuery = query(collectionRef, orderBy("timestamp", "desc"));
+    const unsubscribe = onSnapshot(sortedQuery, (querySnapshot) => {
+
+    setMessages(querySnapshot.docs.map(doc => ({id: doc.id, message : doc.data()})))
+
+});
+
+return () =>{
+  unsubscribe()
+}
+  },[])
+
+  useEffect(()=>{
+    setUsername(prompt("Please enter your name"));
+  },[])
+
+  const sendMessage = async (event) =>{
+    event.preventDefault();
+    await addDoc(collection(db, 'messages'), {
+      message : input,
+      username : username,
+      timestamp : serverTimestamp()
+    })
+
+    setInput('')
+  }
+
+{
+  if(username)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   <div className="App">
+     <img src={logo} alt="" className='logo'/>
+   <p className='welcome'>Welcome {username} to Facebook</p>
+   
+ 
+   <FlipMove className='message-container'>
+     {messages.map(({id, message }) =>(
+         <Message key={id} username={username} message={message}/>
+       ))
+     }
+   </FlipMove>
+   <form className='app__form'>
+   <FormControl className='app__formControl'>
+     <Input className='app__input' placeholder='Enter Message'  type="text" value={input} onChange={event => setInput(event.target.value)}/>
+     
+     <IconButton className='app__iconButton' type="submit"  disabled={!input} variant="contained" color="primary"  onClick={sendMessage}>
+     <SendRoundedIcon className='sendIcon'/>
+     </IconButton>
+   </FormControl>
+
+   </form> 
+   </div>
+ );
+}
 }
 
 export default App;

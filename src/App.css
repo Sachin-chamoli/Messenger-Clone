@@ -1,38 +1,60 @@
+*{
+  font-family: 'Poppins', sans-serif;
+}
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.heading{
+  font-size: 40px;
+}
+.welcome{
+  margin: 5px;
+  font-size: 35px;
+}
+.app__form{
+  padding: 20px;
+  bottom: 0;
+  margin: auto;
+  width: 90vw;
+  height: 2.5rem;
+  background-color: rgb(210, 212, 214);
+  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.app__formControl{
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.app__iconButton{
+  flex: 0;
+}
+.app__input{
+  flex: 1;
 }
 
-.App-link {
-  color: #61dafb;
+.message-container{
+  height: 67vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 92vw;
+  margin: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.message-container::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+/* Define the handle of the scrollbar */
+.message-container::-webkit-scrollbar-thumb {
+  background-color: #cecccc;
+  border-radius: 5px;
+}
+.sendIcon{
+  font-size: 40px !important;
 }
