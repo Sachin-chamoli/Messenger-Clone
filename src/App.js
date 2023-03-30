@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect,  useRef,  useState } from 'react';
 import './App.css';
 import {FormControl, Input, IconButton  } from '@mui/material';
 import Message from './Message';
@@ -14,20 +14,29 @@ function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [username, setUsername] = useState('')
+  const messagesEndRef = useRef(null)
 
   useEffect( ()=>{
     const collectionRef = collection(db, "messages"); 
-    const sortedQuery = query(collectionRef, orderBy("timestamp", "desc"));
+    const sortedQuery = query(collectionRef, orderBy("timestamp"));
     const unsubscribe = onSnapshot(sortedQuery, (querySnapshot) => {
 
     setMessages(querySnapshot.docs.map(doc => ({id: doc.id, message : doc.data()})))
 
+
 });
 
 return () =>{
+
   unsubscribe()
 }
-  },[])
+ },[])
+
+
+useEffect(() => {
+  messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+}, [messages]);
+
 
   useEffect(()=>{
     setUsername(prompt("Please enter your name"));
@@ -44,6 +53,7 @@ return () =>{
     setInput('')
   }
 
+
 {
   if(username)
   return (
@@ -54,11 +64,15 @@ return () =>{
    <img src={logo} alt="" className='logo'/>
    </div>
  
-   <FlipMove className='message-container'>
+   <FlipMove  >
+    <div className='message-container' >
      {messages.map(({id, message }) =>(
          <Message key={id} username={username} message={message}/>
        ))
      }
+      <div ref={messagesEndRef} />
+     </div>
+
    </FlipMove>
    <form className='app__form'>
    <FormControl className='app__formControl'>
